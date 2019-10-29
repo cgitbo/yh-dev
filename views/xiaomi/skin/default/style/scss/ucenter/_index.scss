@@ -1,0 +1,181 @@
+
+.uc_head_red {
+	height: 40px;background:$cf60;line-height: 40px;color: $cff;
+	time {float: right;padding: 0 10px;}
+	h3 {padding:0 10px;font-size: 14px;}
+}
+
+.uc_info {
+	padding: 20px 0;
+	@extend .cf;
+	.user_info {
+		width: 780px;float: right;@extend .cf;
+		li {float: left;width: 390px;margin-bottom: 13px;}
+		strong {color: $cf60;}
+	}
+	.user_stat {
+		width: 760px;float: right;padding: 9px;border:1px solid $cdd;background: $cfa;@extend .cf;
+		li {float: left;height: 13px;margin-right: 20px;}
+		strong {color: $blue;}
+	}
+}
+.user_ico {
+	float: left;width: 108px;position: relative;
+	img {display: block;width: 100px;height: 100px;padding: 3px;border: 1px solid $cdd;}
+	span {
+		position: absolute;display: block;left: 0;right: 0;bottom: 0;height: 24px;line-height: 24px;text-align: center;color: $cff;
+		background: rgba($c00,.8);@include dz();opacity: 0;cursor: pointer;
+	}
+	&:hover {
+		span {opacity: 1;}
+	}
+}
+.uc_head {
+	height: 40px;line-height: 40px;color: $c22;
+	background: $cff;border-bottom: 1px solid $cdd;
+	&.mt10 {margin-top: 10px;}
+	h3 {
+		float: left;font-size: 15px;background: $cf0;padding: 0 15px;height: 40px;
+		a {font-size: 14px;font-weight: normal;text-decoration: none;}
+		&.current{
+			background: $cf60;border-bottom-color:$cf60;
+			a {
+			   font-size: 15px;color: $cff;
+		   }
+		}
+	}
+	.more {
+		float: right;margin-right: 15px;@include dz();
+	}
+	.money {
+		float: right;margin-right: 15px;
+		em {font-weight: bold;color: $red;}
+	}
+	.select {
+		float: right;margin-right: 15px;
+		font-size: 12px;
+		select {
+			border: 1px solid $cdd;height: 22px;border-radius: 5px;
+		}
+	}
+}
+.uc_table {
+	@extend .cf;margin-bottom: 15px;margin-top: 10px;
+	table {
+		width: 100%;text-align: center;
+		thead {
+			th {height: 36px;color: $c22;font-size: 14px;border-bottom: 1px solid $cdd;}
+		}
+		tbody {
+			th,td {padding:8px 5px;line-height: 1.6;}
+			tr:nth-child(2n){background: $cfa;}
+			h4 {
+				text-align: left;color: $blue;font-size: 14px;text-indent: 10px;position: relative;
+				&:before {
+					content: "";display: block;position: absolute;background: $cf60;width: 3px;height: 3px;left: 3px;top: 10px;
+				}
+			}
+		}
+	}
+}
+
+// 优惠券
+.coupon-item {
+	.style {
+		width: 100%;
+    height: 8rem;
+    position: relative;
+		display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 5%;
+		background-color: #F7DBCD;
+    color: #E5004F;
+    border: none;
+		&:after, &:before {
+			content: "";
+			height: .5rem;
+			position: absolute;
+			left: 0;
+			right: 0;
+			display: block;
+			z-index: 9;
+			background-image: linear-gradient(-45deg,#fff 25%,transparent 25%,transparent),linear-gradient(-135deg,#fff 25%,transparent 25%,transparent),linear-gradient(-45deg,transparent 75%,#fff 75%),linear-gradient(-135deg,transparent 75%,#fff 75%);
+			background-size: 1rem 1rem;
+			background-repeat: repeat-x,repeat-x;
+		}
+		&:before {
+			transform: rotate(180deg);
+			bottom: -.12rem;
+		}
+		&:after {
+			top: -.12rem;
+		}
+		.info-box {
+			flex: 1;
+    	padding: 0 3%;
+    	position: relative;
+			.nick {
+				padding: .66% 0;
+				color: #E5004F;
+			}
+			.coupon-money {
+				width: 100%;
+				display: flex;
+    		font-size: 1.2rem;
+    		align-items: center;
+				em {
+					font-size: 3.8rem;
+				}
+				.lay:last-child {
+					flex: 1;
+    			padding: 0 3%;
+    			line-height: 1.66rem;
+				}
+			}
+		}
+		.get-btn {
+			display: flex;
+    	align-items: center;
+    	justify-content: center;
+		  height: 8rem;
+    	text-align: center;
+    	color: #fff;
+    	font-size: 1.5rem;
+    	line-height: 1.35;
+			position: relative;
+			width: 28%;
+    	background-color: #f5f5f5;
+			input {
+				border: none;
+				background: none;
+				color: #E5004F;
+				width: 9rem;
+				font-size: 1.8rem;
+				word-break: break-all;
+				outline: none;
+			}
+		}
+	}
+}
+
+.col_table {
+	@extend .cf;margin-bottom: 15px;margin-top: 10px;
+	table {
+		width: 100%;word-break:break-all;word-wrap:break-word;
+		&,td,th {border: 1px solid $cdd;}
+		th,td {padding: 8px;line-height: 1.8;}
+		th {background: $cfa;text-align: right;width: 130px;}
+	}
+}
+
+.input_sbtn {
+	display: inline-block;padding: 0 10px;cursor: pointer;background: $cfa;border: 1px solid $cdd;
+	@include jb($cff,$cf0);height: 22px;border-radius: 5px;@include dz();line-height: 22px;
+		box-shadow: 0 0 0 1px rgba($cff,.5) inset;
+	&:hover {
+		background: $blue;color: $cff;
+		border: 1px solid darken($blue,10%);
+		@include jb(lighten($blue,10%),darken($blue,10%));
+	}
+}

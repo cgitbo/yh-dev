@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>激活会员</title>
+	{js:jquery}
+	{js:dialog}
+	{js:form}
+	{js:validate}
+	{js:artTemplate}
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="{webroot:public/css/twitter-bootstrap/3.3.7/css/bootstrap.min.css}">
+</head>
+
+<body>
+	<div class="container">
+		<form name="activeVipForm" action="#">
+			<div class="form-group">
+				<label>开通：</label>
+				<select name="amount" class="form-control" pattern='required' alt='选择操作内容'>
+					<option value="">请选择操作类型</option>
+					<option value="3900">vip</option>
+					<option value="49000">社区店</option>
+					<option value="69000">标准店</option>
+					<option value="89000">旗舰店</option>
+				</select>
+			</div>
+			<?php if(IWeb::$app->config['is_empty']==1){?>
+			<div>
+				<label>付款的选否：</label>
+				<select name="is_empty" class="form-control" pattern='required' alt='选择操作内容'>
+					<option value="0">否</option>
+					<option value="1">是</option>
+				</select>
+			</div>
+			<?php }?>
+		</form>
+	</div>
+</body>
+
+</html>

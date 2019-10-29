@@ -1,0 +1,80 @@
+{set:$defaultWhere = array('search' => $this->word , 'category_extend' => $this->cat_id )}
+{set:$goodsObj = search_goods::find($defaultWhere,20);$resultData = $goodsObj->find();}
+
+<div class="bigweb">
+<section class="breadcrumb">
+	<span>您当前的位置：</span> <a href="{url:}">首页</a> » 搜索"{$this->word}"
+</section>
+
+<section class="web">
+	<section class="main">
+		<!-- 搜索结果所在栏目 -->
+		{set:$catExt = Api::run('getGoodsCategoryExtend',array('#word#',$this->word))}
+		{if:$catExt}
+		<section class="search_class">
+			<strong>搜索结果分类：</strong>
+			<div class="search_class_content">
+				{foreach:items=$catExt}
+				{set:$tmpWord=urlencode($this->word);}
+				<a href="{url:/site/search_list/word/$tmpWord/cat/$item['id']}">{$item['name']}({$item['num']})</a>
+				{/foreach}
+			</div>
+		</section>
+		{/if}
+		<!-- 调用筛选 -->
+		{include:_goods_list_filter}
+		<!-- 商品列表 -->
+		<section class="goods_list">
+			{if:$resultData}
+			<ul>
+				{foreach:items=$resultData}
+				<li>
+					<a target="_blank" href="{url:/site/products/id/$item['id']}">
+						<img alt="{$item['name']}" src="{url:/pic/thumb/img/$item[img]/w/205/h/205}">
+						<h5>{$item['name']}</h5>
+						<em>￥{$item['sell_price']}</em>
+						<del>￥{$item['market_price']}</del>
+					</a>
+				</li>
+				{/foreach}
+			</ul>
+			{$goodsObj->getPageBar()}
+
+			{else:}
+			<p class="no_tip">
+				对不起，没有找到相关商品
+			</p>
+			{/if}
+		</section>
+	</section>
+	<aside class="bar">
+		{set:$catSide = Api::run('catTree',$this->catId)}{if:$catSide}
+		<nav class="bar_box bar_goods_nav">
+			<h3 class="bar_box_head">所有分类</h3>
+			{foreach:items=$catSide item=$first}
+			<dl>
+				<dt><a href="{url:/site/pro_list/cat/$first[id]}">{$first['name']}</a></dt>
+				{foreach:items=Api::run('getCategoryByParentid',array('#parent_id#',$first['id'])) item=$second}
+				<dd><a href="{url:/site/pro_list/cat/$second[id]}">{$second['name']}</a></dd>
+				{/foreach}
+			</dl>
+			{/foreach}
+		</nav>
+		{/if}
+		<div class="bar_box">
+			<h3 class="bar_box_head">热卖商品</h3>
+			<ul class="bar_goods">
+				{foreach:items=Api::run('getCommendHot',5)}
+				<li>
+					<a href="{url:/site/products/id/$item['id']}">
+						<img src="{url:/pic/thumb/img/$item['img']/w/60/h/60}" alt="{$item['name']}">
+						<strong>{$item['name']}</strong>
+						<em>￥{$item['sell_price']}</em>
+					</a>
+				</li>
+				{/foreach}
+			</ul>
+		</div>
+	</aside>
+</section>
+</div>

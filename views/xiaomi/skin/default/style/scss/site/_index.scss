@@ -1,0 +1,232 @@
+.home_fouse {
+	@extend .web;height: 460px;position: relative;
+	// img {display: block;width: 1200px;height: 562px;}
+	img {display: block;width: 100%;height: 460px;}
+	strong {display: none;}
+	.FocusPic {
+		li {
+			height: 460px;background-size: cover;
+			background-position: center;
+		}
+		a {
+			display: block;width: 100%;height: 460px;
+		}
+	}
+	.FocusNum {
+		width: 100%;height: 25px;position: absolute;bottom: 0;left: 0;text-align: right;
+		li {
+			display: inline-block;margin: 0 10px 0 0;width: 5px;height: 5px;background: rgba($c00,.3);text-align: left;
+			text-indent: -9999px;border-radius: 50%;border: 3px solid rgba($cff,.3);cursor: pointer;
+			&.on {
+				background: $cff;border: 3px solid rgba($c00,.3);
+			}
+		}
+	}
+	.FocusLeft,.FocusRight {
+		position: absolute;width: 41px;height: 100%;top: 0;
+		background-image: url("../image/icon_slides.png");
+		background-repeat: no-repeat;
+		@include dz();cursor: pointer;
+	}
+	.FocusLeft {
+		left: 240px;
+		background-position: -41px center;
+		&:hover {background-position: 0 center;}
+	}
+	.FocusRight {
+		right: 0;
+		background-position: -82px center;
+		&:hover {background-position: right center;}
+	}
+}
+
+.home_focus_show {
+	@extend .web;margin-top: 15px;
+	.promise {
+		width: 240px;float: left;
+		background: $sgold;height: 160px;overflow: hidden;
+		ul {@extend .cf;}
+		li {
+			float: left;width: 80px;height: 80px;color: rgba($cff,.7);background: $sgold;
+			outline: 1px solid lighten($sgold,5%);text-align: center;@include dz();cursor: pointer;
+			i {display: block;margin-top: 15px;font-size: 22px;}
+			span {display: block;margin-top: 10px;}
+			&:hover {
+				background: lighten($sgold,5%);
+			}
+		}
+	}
+	.show {
+		width: 305px;height: 160px;float: left;margin-left: 15px;background: $cf0;
+	}
+}
+
+.home_rec {
+	@extend .web;margin: 40px auto;
+	header {
+		width: 1200px !important;height: 40px;@extend .cf;
+		h3 {font-size: 22px;float: left;font-weight: normal;}
+		.control {
+			float: right;margin: 1px;
+			@extend .cf;
+			i {
+				width: 36px;height: 24px;background: $cff;position: relative;outline: 1px solid $cdd;color: $c99;text-align: center;line-height: 24px;
+				display: block;float: left;font-size: 20px;cursor: pointer;@include dz();
+				&:hover {
+					z-index: 1;color: $cf60;outline: 1px solid $cf60;
+				}
+			}
+		}
+	}
+	.con {
+		width: 1200px;overflow: hidden;
+	}
+	ul {
+		clear: both;
+		li {
+			float: left;width: 228px;padding-right: 15px;overflow: hidden;
+			a {
+				display: block;background: $cfa;padding: 29px;text-align: center;text-decoration: none;
+				&:hover {
+					img {@include fd(1.1);}
+				}
+				img {
+					display: block;width: 170px;height: 170px;@include dz();
+				}
+				h4 {
+					display: block;color: $c22;@include oneline(30px);font-weight: normal;font-size: 14px;margin-top: 10px;
+				}
+				em {
+					color: $cf60;font-size: 18px;display: block;margin-top: 10px;
+				}
+				del {
+					color: $c99;display: block;margin-top: 10px;text-decoration: line-through;
+				}
+			}
+			&:nth-child(5n+1) a {border-top: 1px solid $pink;}
+			&:nth-child(5n+2) a {border-top: 1px solid $green;}
+			&:nth-child(5n+3) a {border-top: 1px solid $blue;}
+			&:nth-child(5n+4) a {border-top: 1px solid $gold;}
+			&:nth-child(5n) a {border-top: 1px solid $cyan;}
+		}
+	}
+}
+
+.home_tuan {
+	header {
+		position: relative;
+		.floor_nav {
+			position: absolute;right: 0;top: 0;height: 26px;line-height: 26px;padding: 0 5px;
+			dd {
+				float: left;padding: 0 10px;font-size: 14px;
+				a,i {@include dz();}
+				&.more {
+					position: relative;
+					a {
+						display: inline-block;padding-right: 15px;
+						text-decoration: none;
+						i {
+							display: block;position: absolute;right: 0;top: 5px;background: $c99;
+							color: $cff;width: 10px;height: 16px;line-height: 16px;font-size: 14px;
+							border-radius: 50%;padding:0 2px 0 4px;text-align: center;
+						}
+						&:hover {
+							i {
+								background: $cf60;
+							}
+						}
+					}
+				}
+			}	
+		}
+	}
+	li {
+		&:nth-child(5) {padding-right: 0;}
+		a {
+			position: relative;
+			&:before {
+				content: "团购";display: block;background: mix($red,pink);width: 40px;height: 40px;line-height: 40px;
+				text-align: center;color: $cff;border-radius: 50%;
+				position: absolute;right: 10px;top: 10px;z-index: 1;
+			}
+		}
+	}
+}	
+
+.home_qiang li {
+	position: relative;
+	a {border-top-width: 20px !important;}
+	&:nth-child(5) {padding-right: 0;}
+	.times {
+		position: absolute;color: $cff;text-align: center;line-height: 20px;font-size: 12px;
+		left: 20px;top: 0;right: 20px;
+	}
+}
+
+.home_floor {
+	@extend .web_;background: $cfa;padding: 20px 0;
+	.floor_head {
+		@extend .web;height: 40px;
+		position: relative;
+		h2 {font-size: 22px;float: left;font-weight: normal;}
+		.floor_nav {
+			position: absolute;right: 0;top: 0;height: 26px;line-height: 26px;padding: 0 5px;
+			li {
+				float: left;padding: 0 10px;font-size: 14px;
+				a,i {@include dz();}
+			}
+			.more {
+				position: relative;
+				a {
+					display: inline-block;padding-right: 15px;
+					text-decoration: none;
+					i {
+						display: block;position: absolute;right: 0;top: 5px;background: $c99;
+						color: $cff;width: 10px;height: 16px;line-height: 16px;font-size: 14px;
+						border-radius: 50%;padding:0 2px 0 4px;text-align: center;
+					}
+					&:hover {
+						i {
+							background: $cf60;
+						}
+					}
+				}
+			}
+		}
+	}
+	.floor_body {
+		@extend .web;
+		.floor_show {float: left;width: 228px;height: 615px;background: $cf0;}
+		.floor_goods {
+			float: right;width: 1200px - 228px;
+			ul{@extend .cf;}
+			li {
+				background: $cff;height: 300px;margin-bottom: 15px;
+				width: 228px;float: left;margin-left: 15px;@include dz();position: relative;top: 0;
+				box-shadow: 0 0 0 $cff;
+				&:hover {top: -5px;box-shadow: 3px 5px 15px rgba($c99,.5);}
+				a {
+					width: 170px;margin: 0 auto;display: block;text-decoration: none;
+					padding-top: 25px;text-align: center;
+				}
+				img {display: block;width: 170px;height: 170px;}
+				h4 {
+					display: block;color: $c22;@include oneline(30px);font-weight: normal;font-size: 14px;margin-top: 10px;
+				}
+				em {
+					color: $cf60;font-size: 18px;display: block;margin-top: 5px;
+				}
+				del {
+					color: $c99;display: block;margin-top: 5px;text-decoration: line-through;
+				}
+			}
+			&.costpoint {
+				width: 1200px;
+				li:first-child {
+					margin-left: 0;
+				}
+			}
+		}
+	}
+
+}

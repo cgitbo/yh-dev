@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户余额</title>
+{js:jquery}
+{js:dialog}
+{js:form}
+{js:validate}
+{js:artTemplate}
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="{webroot:public/css/twitter-bootstrap/3.3.7/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+	<form name="balanceForm" action="#">
+		<div class="form-group">
+			<label>请选择：</label>
+			<select name="type" class="form-control" pattern='required' alt='选择操作内容'>
+				<option value="">请选择操作类型</option>
+				<option value="recharge">充值账户余额</option>
+				<option value="withdraw">账户余额提现</option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label>请输入金额：</label>
+			<div class="input-group">
+				<span class="input-group-addon"><span class="glyphicon glyphicon-yen"></span></span>
+				<input name="balance" class="form-control" placeholder="填写金额数字" type="text" maxlength="8" pattern='float' alt='填写金额数字' />
+			</div>
+		</div>
+
+		<hr>
+
+		<div id="J_mark">
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">支付宝</span>
+					<input name="alipay" class="form-control" placeholder="填写金额数字" type="text" maxlength="8" alt='填写金额数字' />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">微信</span>
+					<input name="wxpay" class="form-control" placeholder="填写金额数字" type="text" maxlength="8" alt='填写金额数字' />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">刷卡</span>
+					<input name="bankpay" class="form-control" placeholder="填写金额数字" type="text" maxlength="8" alt='填写金额数字' />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">现金</span>
+					<input name="moneypay" class="form-control" placeholder="填写金额数字" type="text" maxlength="8" alt='填写金额数字' />
+				</div>
+			</div>
+			<div class="form-group">
+				<label>备注：</label>
+				<div class="input-group">
+					<textarea class="form-control" rows="3" cols="24" name='note' ></textarea>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<script>
+	window.onload = function() {
+		var $mark = $('#J_mark');
+		setTimeout(function(){
+			$mark.hide();
+		},0);
+
+		$('form[name="balanceForm"] select[name="type"]').on('change', function() {
+			var val = $(this).val();
+			if (val == 'recharge') {
+				$mark.show();
+			} else {
+				$mark.hide();			
+			}
+		});
+	}
+</script>
+</body>
+</html>

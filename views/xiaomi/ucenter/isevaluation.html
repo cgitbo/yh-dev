@@ -1,0 +1,31 @@
+<header class="uc_head">
+	<h3><a href="{url:/ucenter/evaluation}">未评价商品</a></h3>
+	<h3 class="current"><a href='{url:/ucenter/isevaluation}'>已评价商品</a></h3>
+</header>
+<section class="uc_table">
+	<table>
+		<thead>
+			<tr>
+				<th>商品名称</th><th>订单编号</th><th>评论时间</th><th>评分</th><th>评价</th>
+			</tr>
+		</thead>
+		<tbody>
+			{set:$queryIevaluationList = Api::run('getUcenterEvaluation',1)}
+			{foreach:items = $queryIevaluationList->find()}
+			<tr>
+				<td><a href="{url:/site/comments_list/id/$item['goods_id']}" target="_block">{$item['name']}{if:$item['value']}【$item['value']】{/if}</a></td>
+				<td>{$item['order_no']}</td>
+				<td>{$item['comment_time']}</td>
+				<td>{$item['point']}</td>
+				<td><span class="green bold">已评价</span></td>
+			</tr>
+			{/query}
+		</tbody>
+	</table>
+
+    {if:!$items}
+    <section class="no_tip">暂无数据</section>
+    {/if}
+
+    {$queryIevaluationList->getPageBar()}
+</section>

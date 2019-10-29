@@ -1,0 +1,125 @@
+{js:my97date}
+<div class="breadcrumbs" id="breadcrumbs">
+	<ul class="breadcrumb">
+		<li>
+			<i class="home-icon fa fa-home"></i>
+			<a href="#">会员</a>
+		</li>
+		<li>
+			<a href="#">开通vip记录</a>
+		</li>
+		<li class="active">开通vip记录列表</li>
+	</ul>
+</div>
+
+<div class="content">
+	<table class="table list-table">
+			<caption class="row">
+					<form action="{url:/}" method="get" name="searchForm" class="form-inline col-sm-8">
+						<input type='hidden' name='controller' value='member' />
+						<input type='hidden' name='action' value='vip_order_list' />
+		
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+							<input class="form-control" name="search[o.create_time>=]" type="text" value="" onfocus="WdatePicker()" placeholder="起始时间" />
+						</div>
+		
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+							<input class="form-control" name="search[o.create_time<=]" type="text" value="" onfocus="WdatePicker()" placeholder="结束时间" />
+						</div>
+
+						<select class="form-control" name="search[o.pay_status=]">
+							<option value="">支付状态</option>
+							<option value="1">已支付</option>
+							<option value="0">未支付</option>
+						</select>
+
+						<select class="form-control" name="order_type">
+							<option value="">下单方式</option>
+							<option value="1">新版本</option>
+							<option value="2">旧版本</option>
+						</select>
+
+						<select class="form-control" name="user_type">
+							<option value="o.user_id">付款人</option>
+							<option value="o.active_id">购买人</option>
+						</select>
+						<input class="form-control" name="keyword" type="text" value="{echo:IReq::get('keyword')}" />
+		
+						<button class="btn btn-default" onclick="submitForm('vip_order_list')">
+							<i class="fa fa-search"></i> 搜索
+						</button>
+
+						<button class="btn btn-default" onclick="submitForm('vip_order_report')">
+							<i class="fa fa-file-excel-o"></i> 导出报表
+						</button>
+
+						<button class="btn btn-default" onclick="submitForm('recharge_mark_report')">
+							<i class="fa fa-file-excel-o"></i> 充值备注导出
+						</button>
+					</form>
+				</caption>
+		<colgroup>
+			<col />
+			<col width="100px" />
+			<col width="100px" />
+			<col width="100px" />
+			<col width="200px" />
+        </colgroup>
+        
+		<thead>
+			<tr>
+				<th>内容</th>
+				<th>激活金额</th>
+				<th>支付状态</th>
+				<th>创建时间</th>
+				<th>支付时间</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{foreach:items=$this->log}
+			<tr>
+				<td>用户 {$item['username']} 给 {$item['active_name']} 开通了会员</td>
+				<td>{echo:abs($item['order_amount'])}</td>
+
+				{if:$item['order_id']}
+
+				<td>{if:$item['o_pay_status']==0}未支付{else:}<a href="/order/order_show/id/{$item['order_id']}">已支付{/if}</a></td>
+				<td>{$item['o_create_time']}</td>
+				<td>{$item['o_pay_time']}</td>
+
+				{else:}
+
+				<td>{if:$item['pay_status']==0}未支付{else:}已支付{/if}</td>
+				<td>{$item['create_time']}</td>
+				<td>{$item['pay_time']}</td>
+
+				{/if}
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+</div>
+{$this->query->getPageBar()}
+
+<script type="text/javascript">
+$(function()
+{
+	var searchData = {echo:JSON::encode(IReq::get('search'))};
+	for(var index in searchData)
+	{
+		$('[name="search['+index+']"]').val(searchData[index]);
+	}
+
+	$('select[name="user_type"]').val("{echo:IReq::get('user_type')}");
+	$('select[name="order_type"]').val("{echo:IReq::get('order_type')}");
+})
+
+function submitForm(action)
+{
+	$('[name="action"]').val(action);
+	formSubmit("searchForm");
+}
+</script>

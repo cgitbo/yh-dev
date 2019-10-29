@@ -1,0 +1,51 @@
+<div class="bigweb">
+	<section class="breadcrumb">
+		<a href="{url:}"> 首页</a> » 积分兑换
+	</section>
+
+	<section class="web">
+		<section class="main">
+			<section class="goods_tag">
+				<h3 class="tag_head">商品列表</h3>
+			</section>
+			<!-- 商品列表 -->
+			<section class="goods_list">
+				{set:$costpointDB = Api::run('getCostPointList');$costpointData = $costpointDB->find();} {if:$costpointData}
+				<ul>
+					{foreach:items=$costpointData}
+					<li>
+						<a target="_blank" href="{url:/site/products/id/$item['goods_id']}">
+							<img alt="{$item['name']}" src="{url:/pic/thumb/img/$item[img]/w/180/h/180}">
+							<h5>{$item['name']}</h5>
+							<em>{$item['point']}积分</em>
+							<del>￥{$item['sell_price']}</del>
+						</a>
+					</li>
+					{/foreach}
+				</ul>
+				{$costpointDB->getPageBar()}
+				{else:}
+				<p class="no_tip">
+					对不起，没有找到相关商品
+				</p>
+				{/if}
+			</section>
+		</section>
+		<aside class="bar">
+			<div class="bar_box">
+				<h3 class="bar_box_head">热门兑换商品</h3>
+				<ul class="bar_goods">
+					{foreach:items=Api::run('getCostPointHot',5)}
+					<li>
+						<a href="{url:/site/products/id/$item['goods_id']}">
+							<img src="{url:/pic/thumb/img/$item['img']/w/60/h/60}" alt="{$item['name']}">
+							<strong>{$item['name']}</strong>
+							<em>{$item['point']}积分</em>
+						</a>
+					</li>
+					{/foreach}
+				</ul>
+			</div>
+		</aside>
+	</section>
+</div>

@@ -1,0 +1,195 @@
+<!-- 焦点图和选项卡插件 -->
+<script src="{theme:javascript/FengFocus.js}"></script>
+<script src="{theme:javascript/FengTab.js}"></script>
+<script src="{theme:javascript/jquery.marquee.js}"></script>
+
+<section id="home_fouse" class="home_fouse">
+	{if:$this->index_slide}
+	<ul>
+		{foreach:items=$this->index_slide}
+		<li><a href="{url:$item[url]}"><img src="{url:/pic/thumb/img/$item['img']}"></a></li>
+		{/foreach}
+	</ul>
+	{/if}
+</section>
+
+<section class="home_focus_show">
+	<div class="promise">
+		<ul>
+			<li><i class="fa fa-truck"></i><span>货到付款</span></li>
+			<li><i class="fa fa-star"></i><span>星级服务</span></li>
+			<li><i class="fa fa-tags"></i><span>买贵退款</span></li>
+			<li><i class="fa fa-bolt"></i><span>急速送货</span></li>
+			<li><i class="fa fa-umbrella"></i><span>安全保证</span></li>
+			<li><i class="fa fa-wrench"></i><span>售后保证</span></li>
+		</ul>
+	</div>
+	<div class="show">{echo:Ad::show("首页焦点图下广告1_305*160(xiaomi)")}</div>
+	<div class="show">{echo:Ad::show("首页焦点图下广告2_305*160(xiaomi)")}</div>
+	<div class="show">{echo:Ad::show("首页焦点图下广告3_305*160(xiaomi)")}</div>
+</section>
+
+<section class="home_rec">
+	<header>
+		<h3>推荐商品</h3>
+		<div class="control">
+			<i id="home_rec_left" class="fa fa-angle-left"></i>
+			<i id="home_rec_right" class="fa fa-angle-right"></i>
+		</div>
+	</header>
+	<div id="home_rec" class="con">
+		<ul>
+			{foreach:items=Api::run('getCommendRecom',10)}
+			<li>
+				<a href="{url:/site/products/id/$item['id']}">
+					<img src="{url:/pic/thumb/img/$item['img']/w/170/h/170}">
+					<h4>{$item['name']}</h4>
+					<del>￥{$item['market_price']}</del>
+					<em>￥{$item['sell_price']}</em>
+				</a>
+			</li>
+			{/foreach}
+		</ul>
+	</div>
+</section>
+{set:$tuanitems=Api::run('getRegimentList',5)}
+{if:$tuanitems}
+<section class="home_rec home_tuan mt20">
+	<header>
+		<h3>团购商品</h3>
+		<nav class="floor_nav">
+			<dl>
+				<dd class="more"><a href="{url:/site/groupon}">更多 <i class="fa fa-angle-right"></i></a></dd>
+			</dl>
+		</nav>
+	</header>
+	<ul>
+		{foreach:items=$tuanitems}
+		<li>
+			<a href="{url:/site/products/id/$item['goods_id']}">
+				<img src="{url:/pic/thumb/img/$item['img']/w/170/h/170}">
+				<h4>{$item['title']}</h4>
+				<em>￥{$item['regiment_price']}</em>
+			</a>
+		</li>
+		{/foreach}
+	</ul>
+</section>
+{/if}
+
+{set:$qiangitems=Api::run('getPromotionList',6);}
+{if:$qiangitems}
+<section class="home_rec home_qiang mt20">
+	<header>
+		<h3>限时抢购</h3>
+	</header>
+	<ul>
+		{foreach:items=$qiangitems}
+		{set:$free_time = ITime::getDiffSec($item['end_time'])}
+		{set:$countNumsItem[] = $item['p_id'];}
+		<li>
+			<div class="times">
+				<span>倒计时：</span>
+				<em id="cd_hour_{$item['p_id']}">{echo:floor($free_time/3600);}</em> 时
+				<em id='cd_minute_{$item['p_id']}'>{echo:floor(($free_time%3600)/60);}</em> 分
+				<i id='cd_second_{$item['p_id']}'>{echo:$free_time%60;}</i> 秒
+			</div>
+			<a title="{$item['name']}" href="{url:/site/products/id/$item['goods_id']}">
+				<img src="{url:/pic/thumb/img/$item['img']/w/200/h/200}">
+				<h4>{$item['name']}</h4>
+				<em>￥{$item['award_value']}</em>
+			</a>
+		</li>
+		{/foreach}
+	</ul>
+</section>
+{/if}
+
+{if:$pointData = Api::run('getCostPointList',5)}
+<!-- 积分兑换 -->
+<section class="home_floor">
+	<header class="floor_head">
+		<h2>积分兑换</h2>
+		<nav class="floor_nav">
+			<ul>
+				<li class="more"><a href="{url:/site/costpoint}">更多 <i class="fa fa-angle-right"></i></a></li>
+			</ul>
+		</nav>
+	</header>
+	<section class="floor_body">
+		<div class="floor_goods costpoint">
+			<ul>
+				{foreach:items=$pointData}
+				<li>
+					<a href="{url:/site/products/id/$item['goods_id']}">
+						<img src="{url:/pic/thumb/img/$item['img']/w/170/h/170}">
+						<h4>{$item['name']}</h4>
+						<em>{$item['point']}分</em>
+						<del>￥{$item['sell_price']}</del>
+					</a>
+				</li>
+				{/foreach}
+			</ul>
+		</div>
+	</section>
+</section>
+<!-- 积分兑换 -->
+{/if}
+
+<!-- 开始首页分类 -->
+{foreach:items=Api::run('getCategoryListTopByVis') item=$first }
+<section class="home_floor">
+	<header class="floor_head">
+		<h2>{$first['name']}</h2>
+		<nav class="floor_nav">
+			<ul>
+				{foreach:items=Api::run('getCategoryByParentidByVis',array('#parent_id#',$first['id'])) item=$second}
+				<li><a href="{url:/site/pro_list/cat/$second[id]}">{$second['name']}</a></li>
+				{/foreach}
+				<li class="more"><a href="{url:/site/pro_list/cat/$first[id]}">更多 <i class="fa fa-angle-right"></i></a></li>
+			</ul>
+		</nav>
+	</header>
+	<section class="floor_body">
+		<div class="floor_show">
+			{echo:Ad::show("首页分类广告228*615(xiaomi)",$first['id'])}
+		</div>
+		<div class="floor_goods">
+			<ul>
+				{foreach:items=Api::run('getCategoryExtendList',array('#categroy_id#',$first['id']),8)}
+				<li>
+					<a href="{url:/site/products/id/$item['id']}">
+						<img src="{url:/pic/thumb/img/$item['img']/w/170/h/170}">
+						<h4>{$item['name']}</h4>
+						<em>￥{$item['sell_price']}</em>
+						<del>￥{$item['market_price']}</del>
+					</a>
+				</li>
+				{/foreach}
+			</ul>
+		</div>
+	</section>
+</section>
+{/foreach}
+
+
+<script>
+//dom载入完毕执行
+$(function(){
+	// 调用焦点图
+	$("#home_fouse").FengFocus({trigger : "mouseover"});
+	$('#home_rec').kxbdSuperMarquee({
+		distance:1215,
+		time:5,
+		btnGo:{left:'#home_rec_left',right:'#home_rec_right'},
+		direction:'left'
+	});
+	//显示抢购倒计时
+	var cd_timer = new countdown();
+	{if:isset($countNumsItem) && $countNumsItem}
+	{foreach:items = $countNumsItem}
+		cd_timer.add({$item});
+	{/foreach}
+	{/if}
+});
+</script>

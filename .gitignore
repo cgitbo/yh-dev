@@ -1,0 +1,13 @@
+/config/config.php
+/config/site_config.php
+/config/config_default.php
+/backup/
+/upload/
+/.svn/
+/runtime/
+/install/
+/.idea/
+/.vscode/
+node_modules
+/public/img/
+/public/app/

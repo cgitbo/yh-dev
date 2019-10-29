@@ -1,0 +1,101 @@
+{js:my97date}
+<div class="breadcrumbs" id="breadcrumbs">
+	<ul class="breadcrumb">
+		<li>
+			<i class="home-icon fa fa-home"></i>
+			<a href="#">统计</a>
+		</li>
+		<li>
+			<a href="#">日志操作记录</a>
+		</li>
+		<li class="active">股操作记录列表</li>
+	</ul>
+</div>
+
+<div class="content">
+	<table class="table list-table">
+		<colgroup>
+			<col />
+			<col width="100px" />
+			<col width="100px" />
+			<col width="100px" />
+			<col width="100px" />
+			<col width="200px" />
+		</colgroup>
+		<caption class="row">
+			<form action="{url:/}" method="get" name="searchForm" class="form-inline col-sm-8">
+				<input type='hidden' name='controller' value='market' />
+				<input type='hidden' name='action' value='scocks_list' />
+				<div class="input-group">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                	<input class="form-control" name="search[l.datetime>=]" type="text" value="" onfocus="WdatePicker()" placeholder="起始时间" />
+				</div>
+
+			    <div class="input-group">
+			    	<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+			    	<input class="form-control" name="search[l.datetime<=]" type="text" value="" onfocus="WdatePicker()" placeholder="结束时间" />
+				</div>
+
+                <select class="form-control" name="search[l.log_type=]">
+                    <option value="">全部</option>
+                    <option value="1">老股</option>
+                    <option value="2">新股</option>
+				</select>
+				
+				<input class="form-control" name="search[u.username=]" type="text" value="" placeholder="请输入用户名" />
+
+                <button class="btn btn-default" type="submit">
+                    <i class="fa fa-search"></i> 搜索
+                </button>
+			</form>
+
+		</caption>
+		<thead>
+			<tr>
+				<th>内容</th>
+				<th>股</th>
+				<th>类型</th>
+				<th>发生金额</th>
+				<th>当前余额</th>
+				<th>时间</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{set:
+				$type = array('增加','减少');
+				$log_type = array('','老股','新股');
+				$event = array('升级获得','邀请获得','后台获得');
+			}
+			{set:$logObj = Api::run('getScocksLogList')}
+			{foreach:items = $logObj->find()}
+			<tr>
+				<td {if:$item['admin_id']} title="{$item['admin_id']}" {/if} >
+					{if:$item['note']}
+					{$item['note']}
+					{else:}
+					用户 {$item['username']} {$event[$item['event']]} {echo:abs($item['value'])}
+					{/if}
+				</td>
+				<td>{$log_type[$item['log_type']]}</td>
+				<td>{$type[$item['type']]}</td>
+				<td>{echo:abs($item['value'])} 元</td>
+				<td>{echo:abs($item['value_log'])} 元</td>
+				<td>{$item['datetime']}</td>
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+</div>
+{$logObj->getPageBar()}
+
+<script type="text/javascript">
+$(function()
+{
+	var searchData = {echo:JSON::encode(IReq::get('search'))};
+	for(var index in searchData)
+	{
+		$('[name="search['+index+']"]').val(searchData[index]);
+	}
+})
+</script>
